@@ -19,7 +19,7 @@ class CounterPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: BlocListener<CounterBloc, CounterState>(
+      body: BlocConsumer<CounterBloc, CounterState>(
         listener: (context, state) {
           if (state.isIncremented!) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -37,16 +37,14 @@ class CounterPage extends StatelessWidget {
             );
           }
         },
-        child: BlocBuilder<CounterBloc, CounterState>(
-          builder: (context, state) {
-            return Center(
-              child: Text(
-                "${state.count}",
-                style: const TextStyle(fontSize: 100.0),
-              ),
-            );
-          },
-        ),
+        builder: (context, state) {
+          return Center(
+            child: Text(
+              "${state.count}",
+              style: const TextStyle(fontSize: 100.0),
+            ),
+          );
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Row(
