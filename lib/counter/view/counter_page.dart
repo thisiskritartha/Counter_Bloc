@@ -1,5 +1,6 @@
 import 'package:bloc_counter/counter/bloc/counter_bloc.dart';
 import 'package:bloc_counter/counter/bloc/counter_event.dart';
+import 'package:bloc_counter/counter/bloc/counter_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,15 +19,34 @@ class CounterPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: BlocBuilder<CounterBloc, int>(
-        builder: (context, counter) {
-          return Center(
-            child: Text(
-              "$counter",
-              style: const TextStyle(fontSize: 100.0),
-            ),
-          );
+      body: BlocListener<CounterBloc, CounterState>(
+        listener: (context, state) {
+          if (state.isIncremented!) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Counter Incremented"),
+                duration: Duration(milliseconds: 100),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Counter Decremented"),
+                duration: Duration(milliseconds: 100),
+              ),
+            );
+          }
         },
+        child: BlocBuilder<CounterBloc, CounterState>(
+          builder: (context, state) {
+            return Center(
+              child: Text(
+                "${state.count}",
+                style: const TextStyle(fontSize: 100.0),
+              ),
+            );
+          },
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Row(
