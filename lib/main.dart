@@ -3,5 +3,5 @@ import 'package:flutter/material.dart';
 import 'app.dart';
 
 void main() {
-  return runApp(const App());
+  return runApp(App());
 }
