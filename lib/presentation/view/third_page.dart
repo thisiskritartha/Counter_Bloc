@@ -4,12 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../logic/counter/bloc/counter_bloc.dart';
 
 class ThirdPage extends StatelessWidget {
+  final GlobalKey<ScaffoldState> thirdKey = GlobalKey<ScaffoldState>();
   final String name;
-  const ThirdPage({super.key, required this.name});
+  ThirdPage({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: thirdKey,
       appBar: AppBar(
         title: Text(
           name,
@@ -25,13 +27,15 @@ class ThirdPage extends StatelessWidget {
           BlocConsumer<CounterBloc, CounterState>(
             listener: (context, state) {
               if (state.isIncremented!) {
+                ScaffoldMessenger.of(context).removeCurrentSnackBar();
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text("Counter Incremented"),
+                    content: Text("Counter Incremented Third"),
                     duration: Duration(milliseconds: 100),
                   ),
                 );
               } else {
+                ScaffoldMessenger.of(context).removeCurrentSnackBar();
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text("Counter Decremented"),
